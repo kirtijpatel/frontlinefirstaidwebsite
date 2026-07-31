@@ -4,6 +4,9 @@
 # Next.js build output
 /.next
 /out
+/dist
+/.wrangler
+/.vinext
 
 # local caches and logs
 .npm-cache
