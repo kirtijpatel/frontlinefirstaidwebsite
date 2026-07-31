@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const links = [
@@ -10,8 +11,15 @@ const links = [
 
 export function Brand() {
   return <Link className="brand" href="/" aria-label="Frontline Firstaid home">
-    <span className="brand-mark"><span>+</span></span>
-    <span><strong>Frontline</strong><small>FIRSTAID</small></span>
+    <Image
+      className="brand-logo"
+      src="/images/frontline-first-aid-logo.jpeg"
+      alt=""
+      width={58}
+      height={58}
+      priority
+    />
+    <strong className="brand-name">Frontline First Aid</strong>
   </Link>;
 }
 
