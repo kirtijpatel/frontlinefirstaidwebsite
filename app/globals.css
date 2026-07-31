@@ -57,7 +57,7 @@ em { color:var(--orange); font-style:normal; }
 .intro .lead,.prose .lead { color:var(--ink); font-size:1.22rem; line-height:1.65; margin-top:0; }
 .intro .text-link { margin-top:18px; }
 .offerings { background:var(--cream); }
-.section-heading { display:flex; justify-content:space-between; align-items:end; margin-bottom:55px; }
+.section-heading { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:55px; }
 .section-heading>p { max-width:410px; margin:0; }
 .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#d7d9d4; border:1px solid #d7d9d4; }
 .service-card { position:relative; padding:42px; background:var(--paper); min-height:355px; }
@@ -83,14 +83,6 @@ em { color:var(--orange); font-style:normal; }
 .page-hero p { color:var(--muted); max-width:690px; font-size:1.12rem; margin:30px 0 0; }
 .split { display:grid; grid-template-columns:1fr 1fr; gap:10%; }
 .prose p:first-child { margin-top:0; }
-.team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:55px 28px; }
-.person-photo { aspect-ratio:4/4.6; position:relative; background:linear-gradient(145deg,#c9d5dc,#7892a3); overflow:hidden; }
-.person-photo:after { content:""; position:absolute; width:50%; height:55%; border-radius:50% 50% 35% 35%; left:25%; bottom:-5%; background:rgba(255,255,255,.3); }
-.person-photo span { position:absolute; z-index:2; top:22px; left:22px; color:white; font-size:.7rem; letter-spacing:.15em; }
-.tone-2,.tone-5 { background:linear-gradient(145deg,#ebd9cb,#b87b5d); }
-.tone-3,.tone-6 { background:linear-gradient(145deg,#d1d0bf,#8f9472); }
-.person h3 { margin-top:20px; }
-.person p { margin:5px 0; color:var(--orange); font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
 .placeholder-note { margin-top:45px; padding:17px 20px; background:#eef0ed; text-align:center; font-size:.8rem; }
 .gallery-grid { display:grid; grid-template-columns:1.3fr .7fr; grid-auto-rows:300px; gap:16px; }
 .gallery-item { position:relative; margin:0; overflow:hidden; }
@@ -127,7 +119,14 @@ em { color:var(--orange); font-style:normal; }
 .checks label { padding:12px 14px; border:1px solid var(--line); flex:1; }
 .checks input { width:auto; margin:0 7px 0 0; }
 .training-form .button { justify-self:start; }
+.training-form .button:disabled { cursor:wait; opacity:.7; transform:none; }
 .training-form>small { color:var(--muted); }
+.optional { color:var(--muted); font-size:.7rem; font-weight:500; }
+.honeypot { position:absolute!important; left:-10000px!important; width:1px!important; height:1px!important; overflow:hidden!important; }
+.form-error { margin:0; padding:13px 15px; background:#fff0f1; border-left:3px solid var(--orange); color:#9b1329; font-size:.86rem; }
+.contact-layout aside>p { margin-block:25px; }
+.contact-email { margin-block:30px; }
+.response-note { font-size:.84rem; border-top:1px solid var(--line); padding-top:24px; }
 .success { padding:70px; background:white; border:1px solid var(--line); text-align:center; }
 .success>span { display:grid; place-items:center; margin:0 auto 25px; width:65px; height:65px; border-radius:50%; background:#e0eee5; color:#267144; font-size:1.7rem; }
 .success p { max-width:500px; margin:20px auto 30px; }
@@ -155,7 +154,7 @@ em { color:var(--orange); font-style:normal; }
   .intro,.split,.impact,.form-layout { grid-template-columns:1fr; }
   .impact-image { min-height:450px; }
   .impact-copy { padding:50px; }
-  .cards,.team-grid { grid-template-columns:repeat(2,1fr); }
+  .cards { grid-template-columns:repeat(2,1fr); }
   .partner-grid { grid-template-columns:1fr 1fr; }
   .partner-grid article:nth-child(2) { border-right:0; }
   .partner-grid article:nth-child(-n+2) { border-bottom:1px solid var(--line); }
@@ -169,7 +168,7 @@ em { color:var(--orange); font-style:normal; }
   .hero-actions { align-items:flex-start; flex-direction:column; }
   .scroll-note { display:none; }
   .section-heading,.cta { align-items:flex-start; flex-direction:column; gap:30px; }
-  .cards,.team-grid,.partner-grid { grid-template-columns:1fr; }
+  .cards,.partner-grid { grid-template-columns:1fr; }
   .service-card { min-height:310px; }
   .partner-grid article { border:0!important; border-bottom:1px solid var(--line)!important; }
   .impact { width:100%; }
