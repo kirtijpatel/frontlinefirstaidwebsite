@@ -40,7 +40,7 @@ export function InstructorLogin() {
       </label>
       {error && <p className="form-error" role="alert">{error}</p>}
       <button className="button" type="submit" disabled={submitting}>{submitting ? "Unlocking…" : <>Enter resources <span>→</span></>}</button>
-      <small>Access remains active on this device for 12 hours.</small>
+      <small>Access lasts only for this browser session. You’ll need to enter the password again after closing the browser.</small>
     </form>
   </section>;
 }
