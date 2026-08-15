@@ -24,7 +24,7 @@ const videos = [
 ] as const;
 
 const photos = Array.from({ length: 7 }, (_, index) => ({
-  src: `/images/gallery/training-${String(index + 1).padStart(2, "0")}.jpg`,
+  src: `/images/gallery/training-${String(index + 1).padStart(2, "0")}.jpg?v=2`,
   alt: `Frontline Firstaid community training photo ${index + 1}`,
 }));
 
