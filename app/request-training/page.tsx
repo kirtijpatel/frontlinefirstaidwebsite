@@ -4,11 +4,32 @@ import { FormEvent, useState } from "react";
 import { PageHero } from "@/components/page-parts";
 
 export default function RequestTraining() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState("");
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSent(true);
+    setStatus("sending");
+    setError("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const values = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, formType: "training", topics: formData.getAll("topic") }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Unable to send your request.");
+      form.reset();
+      setStatus("sent");
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Unable to send your request.");
+      setStatus("error");
+    }
   }
 
   return <>
@@ -27,11 +48,11 @@ export default function RequestTraining() {
         </ol>
         <div className="contact-box"><span>Questions first?</span><a href="mailto:uvafrontlinefirstaid@gmail.com">uvafrontlinefirstaid@gmail.com</a></div>
       </aside>
-      {sent ? <div className="success">
+      {status === "sent" ? <div className="success">
         <span>✓</span>
         <h2>Thanks for reaching out.</h2>
-        <p>Your request has been captured in this demo. Connect the form to your preferred email or form service before launch.</p>
-        <button className="text-link" onClick={() => setSent(false)}>Send another request →</button>
+        <p>Your request has been sent to the Frontline Firstaid team. We’ll follow up as soon as possible.</p>
+        <button className="text-link" onClick={() => setStatus("idle")}>Send another request →</button>
       </div> : <form className="training-form" onSubmit={submit}>
         <div className="field-row">
           <label>First name<input required name="firstName" placeholder="Jane" /></label>
@@ -52,8 +73,10 @@ export default function RequestTraining() {
           </div>
         </fieldset>
         <label>Anything else we should know?<textarea name="message" rows={5} placeholder="Tell us about your audience, goals, or accessibility needs." /></label>
-        <button className="button button-dark" type="submit">Submit request <span>→</span></button>
-        <small>This demo form does not send data yet.</small>
+        <input className="honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+        {status === "error" && <p className="form-error" role="alert">{error}</p>}
+        <button className="button button-dark" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : <>Submit request <span>→</span></>}</button>
+        <small>Your request will be sent to uvafrontlinefirstaid@gmail.com.</small>
       </form>}
     </section>
   </>;
