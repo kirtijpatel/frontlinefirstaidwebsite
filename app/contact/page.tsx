@@ -42,7 +42,7 @@ export default function Contact() {
         <h2>Start a conversation.</h2>
         <p>For general questions, community partnerships, or organization inquiries, use the form and our team will respond as soon as possible.</p>
         <div className="contact-box contact-email"><span>Email us directly</span><a href="mailto:uvafrontlinefirstaid@gmail.com">uvafrontlinefirstaid@gmail.com</a></div>
-        <p className="response-note">For a CPR or first aid workshop, please use our Request Training page so we can collect the details needed to plan your session.</p>
+        <p className="response-note">For a CPR or first aid workshop, please use our Request Training / Contact page so we can collect the details needed to plan your session.</p>
       </aside>
 
       {status === "sent" ? <div className="success" role="status">

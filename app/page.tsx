@@ -13,7 +13,7 @@ export default function Home() {
     <section className="hero">
       <Image className="hero-image" src="/images/frontline-hero-general-v1.png" alt="First aid supplies and a CPR training manikin in a calm instructional setting" fill priority unoptimized sizes="100vw" />
       <div className="hero-overlay" />
-      <div className="hero-content container"><span className="eyebrow light">Student-led · Community-focused</span><h1>Skills that matter.<br /><em>Confidence that lasts.</em></h1><p>UVA medical students bringing practical CPR and first aid education to Charlottesville and beyond.</p><div className="hero-actions"><Link className="button" href="/request-training">Request training <span>→</span></Link><Link className="text-link light" href="/about">Discover our mission <span>↗</span></Link></div></div>
+      <div className="hero-content container"><span className="eyebrow light">Student-led · Community-focused</span><h1>Skills that matter.<br /><em>Confidence that lasts.</em></h1><p>UVA medical students bringing practical CPR and first aid education to Charlottesville and beyond.</p><div className="hero-actions"><Link className="button" href="/request-training">Request Training / Contact <span>→</span></Link><Link className="text-link light" href="/about">Discover our mission <span>↗</span></Link></div></div>
       <div className="scroll-note">Scroll to explore <span>↓</span></div>
     </section>
 

@@ -34,7 +34,7 @@ export function Header() {
         <a className="instagram" href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
           <span className="instagram-logo" aria-hidden="true" />
         </a>
-        <Link className="button button-small" href="/request-training">Request training</Link>
+        <Link className="button button-small" href="/request-training">Request Training / Contact</Link>
       </nav>
     </div>
   </header>;

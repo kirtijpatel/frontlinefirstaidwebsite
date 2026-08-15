@@ -5,5 +5,5 @@ export function PageHero({ eyebrow, title, text }: { eyebrow: string; title: str
 }
 
 export function Cta() {
-  return <section className="cta container"><div><span className="eyebrow light">Bring training to your group</span><h2>Prepared people build safer communities.</h2></div><Link className="button button-light" href="/request-training">Request a session <span>→</span></Link></section>;
+  return <section className="cta container"><div><span className="eyebrow light">Bring training to your group</span><h2>Prepared people build safer communities.</h2></div><Link className="button button-light" href="/request-training">Request Training / Contact <span>→</span></Link></section>;
 }
