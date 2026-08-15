@@ -34,9 +34,23 @@ export function InstructorLogin() {
       <h2>For Frontline instructors.</h2>
       <p>Enter the shared instructor password to access teaching materials, session guidance, and team resources.</p>
     </div>
-    <form className="training-form instructor-login-form" onSubmit={submit}>
+    <form className="training-form instructor-login-form" onSubmit={submit} autoComplete="off">
       <label htmlFor="instructor-password">Instructor password
-        <input id="instructor-password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required autoFocus />
+        <input
+          id="instructor-password"
+          name="instructor-access-code"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          autoComplete="off"
+          autoCapitalize="none"
+          spellCheck={false}
+          data-1p-ignore
+          data-lpignore="true"
+          data-bwignore="true"
+          required
+          autoFocus
+        />
       </label>
       {error && <p className="form-error" role="alert">{error}</p>}
       <button className="button" type="submit" disabled={submitting}>{submitting ? "Unlocking…" : <>Enter resources <span>→</span></>}</button>
