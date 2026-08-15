@@ -92,6 +92,11 @@ function resourceType(link: string) {
   return "Google resource";
 }
 
+function resourceThumbnail(link: string) {
+  const match = link.match(/\/d\/([^/?#]+)/);
+  return match ? `https://drive.google.com/thumbnail?id=${encodeURIComponent(match[1])}&sz=w800` : "";
+}
+
 export default async function InstructorResources() {
   const cookieStore = await cookies();
   const unlocked = await hasInstructorAccess(cookieStore.get(INSTRUCTOR_COOKIE)?.value);
@@ -107,7 +112,12 @@ export default async function InstructorResources() {
       {resources === null ? <div className="resource-message"><strong>Resources are temporarily unavailable.</strong><p>Please refresh the page in a moment or contact the team if the problem continues.</p></div>
         : resources.length === 0 ? <div className="resource-message"><strong>No resources are currently listed.</strong><p>Add a visible row to the instructor resource spreadsheet and it will appear here automatically.</p></div>
         : <div className="resource-grid">{resources.map((resource, index) => {
-          const content = <><span>{String(index + 1).padStart(2, "0")}</span><h3>{resource.title}</h3>{resource.description && <p>{resource.description}</p>}<small>{resource.link ? `${resourceType(resource.link)} · Open ↗` : "Link coming soon"}</small></>;
+          const type = resourceType(resource.link);
+          const thumbnail = resourceThumbnail(resource.link);
+          const content = <>
+            <div className="resource-card-copy"><span>{String(index + 1).padStart(2, "0")}</span><h3>{resource.title}</h3>{resource.description && <p>{resource.description}</p>}<small>{resource.link ? `${type} · Open ↗` : "Link coming soon"}</small></div>
+            <div className="resource-preview">{thumbnail ? <img src={thumbnail} alt={`Preview of ${resource.title}`} loading="lazy" referrerPolicy="no-referrer" /> : <span>{type}</span>}</div>
+          </>;
           return resource.link
             ? <a className="resource-card" href={resource.link} target="_blank" rel="noreferrer" key={`${resource.title}-${index}`}>{content}</a>
             : <article className="resource-card resource-card-disabled" key={`${resource.title}-${index}`}>{content}</article>;
