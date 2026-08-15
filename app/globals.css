@@ -143,11 +143,15 @@ em { color:var(--orange); font-style:normal; }
 .instructor-logout { border:0; background:none; cursor:pointer; white-space:nowrap; }
 .instructor-logout:disabled { opacity:.65; cursor:wait; }
 .resource-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:55px; }
-.resource-grid article { background:#fff; padding:42px 35px; min-height:290px; display:flex; flex-direction:column; }
-.resource-grid article>span { color:var(--orange); font-weight:800; font-size:.78rem; letter-spacing:.12em; }
+.resource-card { background:#fff; padding:42px 35px; min-height:290px; display:flex; flex-direction:column; transition:background .2s ease, transform .2s ease; }
+a.resource-card:hover { background:#fafafa; transform:translateY(-3px); }
+.resource-card-disabled { background:#f8f8f8; }
+.resource-card>span { color:var(--orange); font-weight:800; font-size:.78rem; letter-spacing:.12em; }
 .resource-grid h3 { margin:32px 0 15px; font-size:1.45rem; }
 .resource-grid p { color:var(--muted); }
 .resource-grid small { margin-top:auto; padding-top:35px; color:#777; text-transform:uppercase; letter-spacing:.09em; font-weight:700; }
+.resource-message { margin-top:55px; padding:40px; border:1px solid var(--line); background:#f8f8f8; }
+.resource-message p { margin:10px 0 0; }
 .resource-help { margin-top:35px; padding:28px 32px; background:#f5f5f5; display:flex; align-items:center; justify-content:space-between; gap:30px; }
 .resource-help p { margin:0; color:var(--muted); }
 .resource-help a { color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
@@ -214,7 +218,7 @@ em { color:var(--orange); font-style:normal; }
   .item-1,.item-4 { grid-row:span 1; }
   .field-row { grid-template-columns:1fr; }
   .training-form { padding:28px 20px; }
-  .resource-grid article { min-height:245px; }
+  .resource-card { min-height:245px; }
   .resource-help { align-items:flex-start; flex-direction:column; gap:8px; }
   .checks { flex-direction:column; }
   .footer-grid { grid-template-columns:1fr; gap:35px; }
