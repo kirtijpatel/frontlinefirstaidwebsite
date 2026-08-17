@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 const links = [
   ["/", "Home"], ["/about", "About Us"], ["/instructor-resources", "Instructor Resources"],
@@ -33,6 +34,21 @@ export function Brand() {
 
 export function Header() {
   const path = usePathname();
+  const previousPath = useRef(path);
+
+  useEffect(() => {
+    const leftInstructorResources = previousPath.current === "/instructor-resources" && path !== "/instructor-resources";
+    previousPath.current = path;
+
+    if (leftInstructorResources) {
+      void fetch("/api/instructor-access", {
+        method: "DELETE",
+        keepalive: true,
+        cache: "no-store",
+      });
+    }
+  }, [path]);
+
   return <header className={path === "/" ? "site-header home-header" : "site-header"}>
     <div className="nav-wrap">
       <Brand />

@@ -5,6 +5,11 @@ import { InstructorLogin, InstructorLogout } from "./instructor-login";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const metadata = {
+  title: "Instructor Resources",
+  alternates: { canonical: "/instructor-resources" },
+  robots: { index: false, follow: false },
+};
 
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1xDiJfz5DeIBDxEOl9CXzebAlouU3yA2bMp5f0jizAqU/export?format=csv&gid=0";
 

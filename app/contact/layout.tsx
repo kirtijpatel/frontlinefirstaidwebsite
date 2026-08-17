@@ -1,4 +1,5 @@
 export const metadata = {
+  alternates: { canonical: "/request-training" },
   title: "Contact Us",
   description: "Contact Frontline Firstaid at the University of Virginia.",
 };

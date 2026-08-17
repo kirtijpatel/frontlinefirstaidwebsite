@@ -28,7 +28,7 @@ const photos = Array.from({ length: 7 }, (_, index) => ({
   alt: `Frontline Firstaid community training photo ${index + 1}`,
 }));
 
-export const metadata = { title: "Gallery" };
+export const metadata = { title: "Gallery", alternates: { canonical: "/gallery" } };
 export default function Gallery() {
   return <><PageHero eyebrow="In the community" title="Learning looks better hands-on." text="A glimpse at the workshops, partnerships, and people that bring our mission to life." />
     <section className="container section gallery-videos"><div className="section-heading"><div><span className="eyebrow">Video stories</span><h2>Frontline in the news.</h2></div><p>Watch conversations and features about our work without leaving this page.</p></div><div className="video-grid">{videos.map((video) => <figure className="video-card" key={video.src}><div className="video-frame">{video.type === "youtube" ? <iframe src={video.src} title={video.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /> : <video controls preload="metadata" poster={video.poster}><source src={video.src} type="video/mp4" />Your browser does not support embedded video.</video>}</div><figcaption><strong>{video.title}</strong><span>{video.caption}</span></figcaption></figure>)}</div></section>
