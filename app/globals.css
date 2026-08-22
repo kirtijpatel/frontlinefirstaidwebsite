@@ -40,7 +40,7 @@ em { color:var(--orange); font-style:normal; }
 .brand-name { color:#12345b; font-family:var(--font-display); font-size:1.12rem; line-height:1; letter-spacing:-.025em; white-space:nowrap; }
 .nav-links { display:flex; align-items:center; gap:27px; font-size:.79rem; font-weight:750; }
 .nav-links>a:not(.button) { padding:32px 0; border-bottom:2px solid transparent; }
-.nav-links>a.active { color:var(--orange); border-color:var(--orange); }
+.nav-links>a.active { color:var(--orange); border-color:transparent; }
 .nav-dropdown { position:relative; align-self:stretch; display:flex; align-items:center; }
 .nav-dropdown-trigger { height:100%; padding:0; border:0; border-bottom:2px solid transparent; background:none; color:inherit; font-size:inherit; font-weight:inherit; cursor:pointer; white-space:nowrap; }
 .nav-dropdown-trigger span { display:inline-block; margin-left:5px; color:var(--orange); transition:transform .2s ease; }
@@ -53,7 +53,7 @@ em { color:var(--orange); font-style:normal; }
 .instagram { display:grid; place-items:center; line-height:1; }
 .instagram-logo { display:block; width:28px; height:28px; object-fit:contain; }
 
-.hero { height:calc(100vh - 84px); min-height:670px; position:relative; display:flex; align-items:center; overflow:hidden; background:var(--navy); }
+.hero { min-height:calc(100svh - 84px); padding-block:52px 76px; position:relative; display:flex; align-items:center; overflow:hidden; background:var(--navy); }
 .hero-image { object-fit:cover; }
 .hero-overlay { position:absolute; inset:0; background:linear-gradient(90deg,rgba(18,18,18,.92) 0%,rgba(18,18,18,.78) 38%,rgba(18,18,18,.24) 72%,rgba(18,18,18,.04)); }
 .hero-content { position:relative; z-index:2; color:white; }
@@ -81,7 +81,7 @@ em { color:var(--orange); font-style:normal; }
 .service-card { position:relative; padding:42px; background:var(--paper); min-height:355px; }
 .card-number { position:absolute; right:28px; top:25px; color:#9da6a7; font-size:.7rem; }
 .service-icon { position:relative; display:grid; place-items:center; width:58px; height:58px; margin-bottom:62px; border-radius:50%; background:#fbe8eb; color:var(--orange); }
-.service-icon-heart:before { content:"♡"; font:900 2.35rem/1 Arial,sans-serif; transform:translateY(-1px); }
+.service-icon-heart:before { content:"♥"; font:900 2rem/1 Arial,sans-serif; transform:scaleX(1.08) scaleY(.82); transform-origin:center; }
 .service-icon-plus:before,.service-icon-plus:after { content:""; position:absolute; width:25px; height:4px; border-radius:3px; background:currentColor; }
 .service-icon-plus:after { transform:rotate(90deg); }
 .service-icon-pill:before { content:""; width:27px; height:14px; border:3px solid currentColor; border-radius:10px; transform:rotate(-38deg); }
@@ -177,6 +177,7 @@ em { color:var(--orange); font-style:normal; }
 .instructor-login-copy h2 { margin-top:18px; }
 .instructor-login-copy p { color:var(--muted); margin-top:22px; max-width:480px; }
 .instructor-login-form { max-width:620px; width:100%; }
+.masked-access-code { -webkit-text-security:disc; }
 .instructor-resources .section-heading { align-items:end; }
 .emergency-contacts { display:grid; grid-template-columns:minmax(250px,.85fr) minmax(0,1.65fr); gap:42px; align-items:center; margin-bottom:75px; padding:34px 38px; border:1px solid var(--line); border-left:5px solid var(--orange); background:#f6f6f6; }
 .emergency-contacts .eyebrow { margin-bottom:14px; }

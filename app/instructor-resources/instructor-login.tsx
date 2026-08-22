@@ -39,7 +39,8 @@ export function InstructorLogin() {
         <input
           id="instructor-password"
           name="instructor-access-code"
-          type="password"
+          type="text"
+          className="masked-access-code"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           autoComplete="off"
@@ -54,7 +55,6 @@ export function InstructorLogin() {
       </label>
       {error && <p className="form-error" role="alert">{error}</p>}
       <button className="button" type="submit" disabled={submitting}>{submitting ? "Unlocking…" : <>Enter resources <span>→</span></>}</button>
-      <small>For security, the password is not saved and access ends when you leave this page.</small>
     </form>
   </section>;
 }

@@ -129,8 +129,14 @@ function groupPhotos(photos: GalleryPhoto[]): PhotoGroup[] {
 }
 
 async function getGalleryContent() {
-  const sheetRows = await fetchSharedSheetRows({ sheet: "Gallary" })
-    || await fetchSharedSheetRows({ sheet: "Gallery" });
+  const sheetCandidates = await Promise.all([
+    fetchSharedSheetRows({ sheet: "Gallery" }),
+    fetchSharedSheetRows({ sheet: "Gallary" }),
+  ]);
+  const sheetRows = sheetCandidates.find((rows) => rows?.some((row) => {
+    const label = (row[0] || "").trim().toLowerCase();
+    return label === "video stories" || label === "photo gallery" || label === "photo gallary";
+  })) || null;
   if (!sheetRows?.length) return { videos: fallbackVideos, photoGroups: groupPhotos(fallbackPhotos) };
 
   const videoStart = sheetRows.findIndex((row) => (row[0] || "").trim().toLowerCase() === "video stories");
