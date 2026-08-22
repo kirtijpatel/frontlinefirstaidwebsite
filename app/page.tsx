@@ -48,7 +48,10 @@ export default async function Home() {
     <section className="hero">
       <Image className="hero-image" src="/images/frontline-hero-general-v1.png" alt="First aid supplies and a CPR training manikin in a calm instructional setting" fill priority unoptimized sizes="100vw" />
       <div className="hero-overlay" />
-      <div className="hero-content container"><span className="eyebrow light">Student-led · Community-focused</span><h1>Skills that matter.<br /><em>Confidence that lasts.</em></h1><p>UVA medical students bringing practical CPR and first aid education to Charlottesville and beyond.</p>{siteStats.length > 0 && <div className="hero-stats">{siteStats.map((stat) => <div className="hero-stat" key={stat.label} aria-label={`${stat.value.toLocaleString("en-US")} ${stat.label}, since 2025`}><strong>{stat.value.toLocaleString("en-US")}</strong><span>{stat.label}</span><small>Since 2025</small></div>)}</div>}<div className="hero-actions"><Link className="button" href="/request-training">Request Training <span>→</span></Link><Link className="text-link light" href="/about">Learn more about us <span>↗</span></Link></div></div>
+      <div className="hero-content container"><span className="eyebrow light">Student-led · Community-focused</span><h1>Skills that matter.<br /><em>Confidence that lasts.</em></h1><p>UVA medical students bringing practical CPR and first aid education to Charlottesville and beyond.</p>{siteStats.length > 0 && <div className="hero-stats">{siteStats.map((stat) => {
+        const isAedStat = stat.label.toLowerCase().includes("aed");
+        return <div className="hero-stat" key={stat.label}><strong>{stat.value.toLocaleString("en-US")}</strong><span>{stat.label}</span><small>Since 2025</small>{isAedStat && <small className="hero-stat-partnership">Thanks to our partnership with the <a href="https://www.compressandshock.org/" target="_blank" rel="noreferrer">Compress &amp; Shock Foundation</a>.</small>}</div>;
+      })}</div>}<div className="hero-actions"><Link className="button" href="/request-training">Request Training <span>→</span></Link><Link className="text-link light" href="/about">Learn more about us <span>↗</span></Link></div></div>
       <div className="scroll-note">Scroll to explore <span>↓</span></div>
     </section>
 
