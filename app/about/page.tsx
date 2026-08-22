@@ -1,8 +1,8 @@
 import { Cta, PageHero } from "@/components/page-parts";
 
-export const metadata = { title: "About Us" };
+export const metadata = { title: "About Us", alternates: { canonical: "/about" } };
 export default function About() {
-  return <><PageHero eyebrow="Our story" title="Care starts before help arrives." text="Frontline Firstaid equips everyday people with the knowledge and confidence to act in an emergency." />
-    <section className="container split section"><div><span className="eyebrow">Who we are</span><h2>Medical students with a shared purpose.</h2></div><div className="prose"><p className="lead">We are a student-run organization at the University of Virginia School of Medicine serving the Charlottesville community through practical health education.</p><p>We believe lifesaving skills belong to everyone. By making CPR and first aid training approachable, our instructors help remove the fear and uncertainty that can keep bystanders from stepping forward.</p><p>Every workshop centers hands-on practice, clear explanations, and respect for each learner’s starting point.</p></div></section>
+  return <><PageHero eyebrow="Who we are" title="Care starts before help arrives." text="We are a group of UVA medical students who believe that where you live shouldn’t determine whether you survive a medical emergency. Our goal is to equip communities across Charlottesville with the knowledge and skills to act during a medical emergency before first responders arrive." />
+    <section className="container split section"><div><span className="eyebrow">Our mission</span><h2>Prepared bystanders can change the outcome.</h2></div><div className="prose"><p className="lead">Immediate bystander CPR can double or triple a person’s chance of survival after cardiac arrest.</p><p>Every minute CPR is delayed, the chance of survival decreases by about 10%. The actions taken before first responders arrive can make a lifesaving difference.</p><p>Our goal is to remove the lack of confidence and fear of causing harm that can keep people from stepping forward. We empower anyone facing a medical emergency with the knowledge and skills to take action.</p></div></section>
     <Cta /></>;
 }

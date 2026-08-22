@@ -8,6 +8,7 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://uvafrontlinefirstaid.com"),
+  alternates: { canonical: "/" },
   title: { default: "Frontline Firstaid", template: "%s | Frontline Firstaid" },
   description: "UVA medical students teaching practical CPR and first aid skills to the Charlottesville community.",
   openGraph: {

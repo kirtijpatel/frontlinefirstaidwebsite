@@ -42,11 +42,11 @@ export default function Contact() {
         <h2>Start a conversation.</h2>
         <p>For general questions, community partnerships, or organization inquiries, use the form and our team will respond as soon as possible.</p>
         <div className="contact-box contact-email"><span>Email us directly</span><a href="mailto:uvafrontlinefirstaid@gmail.com">uvafrontlinefirstaid@gmail.com</a></div>
-        <p className="response-note">For a CPR or first aid workshop, please use our Request Training page so we can collect the details needed to plan your session.</p>
+        <p className="response-note">For a CPR or first aid workshop, please use our Request Training / Contact page so we can collect the details needed to plan your session.</p>
       </aside>
 
       {status === "sent" ? <div className="success" role="status">
-        <span>✓</span><h2>Message sent.</h2><p>Thank you for contacting Frontline Firstaid. Your message has been delivered to our student team.</p>
+        <span>✓</span><h2>Message received.</h2><p>Thank you for contacting Frontline Firstaid. Your message has been saved for our student team, and we’ll follow up as soon as possible.</p>
         <button className="text-link" onClick={() => setStatus("idle")}>Send another message →</button>
       </div> : <form className="training-form" onSubmit={submit}>
         <div className="field-row">
@@ -60,7 +60,7 @@ export default function Contact() {
         <input className="honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
         {status === "error" && <p className="form-error" role="alert">{error}</p>}
         <button className="button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : <>Send message <span>→</span></>}</button>
-        <small>Your message will be sent to uvafrontlinefirstaid@gmail.com.</small>
+        <small>Your message will be securely shared with the Frontline Firstaid team.</small>
       </form>}
     </section>
   </>;
