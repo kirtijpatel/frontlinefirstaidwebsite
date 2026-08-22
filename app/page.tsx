@@ -13,43 +13,46 @@ const offerings = [
   { icon: "S", title: "Stop the Bleed", text: "Thanks to community partners, we are able to help set up Stop the Bleed trainings to help recognize and manage life-threatening bleeding." },
 ];
 
-async function getPeopleTrained() {
-  const sheetRows = await fetchSharedSheetRows({ sheet: "Site Stats" });
-  if (!sheetRows?.length) return null;
+type SiteStat = {
+  label: string;
+  value: number;
+};
+
+async function getSiteStats(): Promise<SiteStat[]> {
+  const sheetRows = await fetchSharedSheetRows({ sheet: "Site Data" });
+  if (!sheetRows?.length) return [];
 
   const [headers, ...rows] = sheetRows;
   const visibleIndex = headerIndex(headers, "visible");
   const metricIndex = headerIndex(headers, "metric", "label");
-  const valueIndex = headerIndex(headers, "value", "count", "number");
-  if (metricIndex < 0 || valueIndex < 0) return null;
+  const namedValueIndex = headerIndex(headers, "value", "count", "number");
+  const labelColumn = metricIndex >= 0 ? metricIndex : 0;
+  const valueColumn = namedValueIndex >= 0 ? namedValueIndex : 1;
 
-  const peopleTrainedRow = rows.find((row) => {
-    const metric = (row[metricIndex] || "").trim().toLowerCase();
-    return rowIsVisible(row, visibleIndex) && ["people trained", "people-trained", "people_trained"].includes(metric);
-  });
-  if (!peopleTrainedRow) return null;
+  return rows.flatMap((row) => {
+    if (!rowIsVisible(row, visibleIndex)) return [];
 
-  const numberMatch = (peopleTrainedRow[valueIndex] || "").match(/[\d][\d,]*/);
-  if (!numberMatch) return null;
+    const label = (row[labelColumn] || "").trim().replace(/:\s*$/, "");
+    const numberMatch = (row[valueColumn] || "").match(/[\d][\d,]*/);
+    if (!label || !numberMatch) return [];
 
-  const count = Number(numberMatch[0].replaceAll(",", ""));
-  return Number.isSafeInteger(count) && count >= 0 ? count : null;
+    const value = Number(numberMatch[0].replaceAll(",", ""));
+    return Number.isSafeInteger(value) && value >= 0 ? [{ label, value }] : [];
+  }).slice(0, 2);
 }
 
 export default async function Home() {
-  const peopleTrained = await getPeopleTrained();
+  const siteStats = await getSiteStats();
 
   return <>
     <section className="hero">
       <Image className="hero-image" src="/images/frontline-hero-general-v1.png" alt="First aid supplies and a CPR training manikin in a calm instructional setting" fill priority unoptimized sizes="100vw" />
       <div className="hero-overlay" />
-      <div className="hero-content container"><span className="eyebrow light">Student-led · Community-focused</span><h1>Skills that matter.<br /><em>Confidence that lasts.</em></h1><p>UVA medical students bringing practical CPR and first aid education to Charlottesville and beyond.</p><div className="hero-actions"><Link className="button" href="/request-training">Request Training <span>→</span></Link><Link className="text-link light" href="/about">Learn more about us <span>↗</span></Link></div></div>
+      <div className="hero-content container"><span className="eyebrow light">Student-led · Community-focused</span><h1>Skills that matter.<br /><em>Confidence that lasts.</em></h1><p>UVA medical students bringing practical CPR and first aid education to Charlottesville and beyond.</p>{siteStats.length > 0 && <div className="hero-stats">{siteStats.map((stat) => <div className="hero-stat" key={stat.label} aria-label={`${stat.value.toLocaleString("en-US")} ${stat.label}, since 2025`}><strong>{stat.value.toLocaleString("en-US")}</strong><span>{stat.label}</span><small>Since 2025</small></div>)}</div>}<div className="hero-actions"><Link className="button" href="/request-training">Request Training <span>→</span></Link><Link className="text-link light" href="/about">Learn more about us <span>↗</span></Link></div></div>
       <div className="scroll-note">Scroll to explore <span>↓</span></div>
     </section>
 
     <section className="intro container section"><div><span className="eyebrow">Why Frontline Firstaid</span><h2>Emergency skills should feel <em>within reach.</em></h2></div><div><p className="lead">We make lifesaving education approachable, practical, and rooted in the needs of our community.</p><p>Our student instructors translate clinical knowledge into hands-on skills people can use when every second counts.</p><Link className="text-link" href="/about">Learn more about us <span>→</span></Link></div></section>
-
-    {peopleTrained !== null && <section className="community-impact"><div className="container community-impact-inner"><div><span className="eyebrow light">Our community impact</span><h2>Practical skills.<br /><em>Real reach.</em></h2></div><div className="training-counter" aria-label={`${peopleTrained.toLocaleString("en-US")} people trained`}><strong>{peopleTrained.toLocaleString("en-US")}</strong><span>People trained</span><small>and counting</small></div></div></section>}
 
     <section className="offerings section"><div className="container"><span className="eyebrow offerings-eyebrow">What we teach</span><div className="cards">{offerings.map((item, i) => <article className="service-card" key={item.title}><span className="card-number">0{i + 1}</span><span className="service-icon">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div><p className="offerings-note">In order to keep our trainings free, we do not offer certifications.</p></div></section>
 
