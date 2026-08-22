@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { PageHero } from "@/components/page-parts";
 import { INSTRUCTOR_COOKIE, hasInstructorAccess } from "@/lib/instructor-auth";
+import { fetchSharedSheetRows, headerIndex, rowIsVisible } from "@/lib/shared-sheet";
 import { InstructorLogin, InstructorLogout } from "./instructor-login";
 
 export const dynamic = "force-dynamic";
@@ -11,47 +12,11 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1xDiJfz5DeIBDxEOl9CXzebAlouU3yA2bMp5f0jizAqU/export?format=csv&gid=0";
-
 type Resource = {
   title: string;
   description: string;
   link: string;
 };
-
-function parseCsv(csv: string) {
-  const rows: string[][] = [];
-  let row: string[] = [];
-  let field = "";
-  let quoted = false;
-
-  for (let index = 0; index < csv.length; index += 1) {
-    const character = csv[index];
-    if (character === '"') {
-      if (quoted && csv[index + 1] === '"') {
-        field += '"';
-        index += 1;
-      } else {
-        quoted = !quoted;
-      }
-    } else if (character === "," && !quoted) {
-      row.push(field);
-      field = "";
-    } else if ((character === "\n" || character === "\r") && !quoted) {
-      if (character === "\r" && csv[index + 1] === "\n") index += 1;
-      row.push(field);
-      if (row.some((cell) => cell.trim())) rows.push(row);
-      row = [];
-      field = "";
-    } else {
-      field += character;
-    }
-  }
-
-  row.push(field);
-  if (row.some((cell) => cell.trim())) rows.push(row);
-  return rows;
-}
 
 function safeDocumentLink(value: string) {
   try {
@@ -63,31 +28,25 @@ function safeDocumentLink(value: string) {
 }
 
 async function getResources(): Promise<Resource[] | null> {
-  try {
-    const response = await fetch(SHEET_CSV_URL, { cache: "no-store" });
-    if (!response.ok) return null;
+  const sheetRows = await fetchSharedSheetRows({ gid: "0" });
+  if (!sheetRows?.length) return null;
 
-    const [headers, ...rows] = parseCsv(await response.text());
-    const columns = headers.map((header) => header.trim().toLowerCase());
-    const visibleIndex = columns.indexOf("visible");
-    const titleIndex = columns.indexOf("title");
-    const descriptionIndex = columns.indexOf("description");
-    const linkIndex = columns.indexOf("link");
-    if (titleIndex < 0 || linkIndex < 0) return null;
+  const [headers, ...rows] = sheetRows;
+  const visibleIndex = headerIndex(headers, "visible");
+  const titleIndex = headerIndex(headers, "title");
+  const descriptionIndex = headerIndex(headers, "description");
+  const linkIndex = headerIndex(headers, "link");
+  if (titleIndex < 0 || linkIndex < 0) return null;
 
-    return rows.flatMap((row) => {
-      const visible = visibleIndex < 0 || ["yes", "true", "1"].includes((row[visibleIndex] || "").trim().toLowerCase());
-      const title = (row[titleIndex] || "").trim();
-      if (!visible || !title) return [];
-      return [{
-        title,
-        description: descriptionIndex < 0 ? "" : (row[descriptionIndex] || "").trim(),
-        link: safeDocumentLink(row[linkIndex] || ""),
-      }];
-    });
-  } catch {
-    return null;
-  }
+  return rows.flatMap((row) => {
+    const title = (row[titleIndex] || "").trim();
+    if (!rowIsVisible(row, visibleIndex) || !title) return [];
+    return [{
+      title,
+      description: descriptionIndex < 0 ? "" : (row[descriptionIndex] || "").trim(),
+      link: safeDocumentLink(row[linkIndex] || ""),
+    }];
+  });
 }
 
 function resourceType(link: string) {

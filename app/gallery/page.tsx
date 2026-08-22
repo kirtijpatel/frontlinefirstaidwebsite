@@ -1,5 +1,9 @@
 import Image from "next/image";
 import { PageHero } from "@/components/page-parts";
+import { fetchSharedSheetRows, headerIndex, rowIsVisible } from "@/lib/shared-sheet";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const videos = [
   {
@@ -23,14 +27,67 @@ const videos = [
   },
 ] as const;
 
-const photos = Array.from({ length: 7 }, (_, index) => ({
+const fallbackPhotos = Array.from({ length: 7 }, (_, index) => ({
   src: `/images/gallery/training-${String(index + 1).padStart(2, "0")}.jpg?v=2`,
   alt: `Frontline Firstaid community training photo ${index + 1}`,
+  description: "",
 }));
 
+type GalleryPhoto = {
+  src: string;
+  alt: string;
+  description: string;
+};
+
+function safeImageSource(value: string) {
+  const source = value.trim();
+  if (source.startsWith("/")) return source;
+
+  try {
+    const url = new URL(source);
+    if (url.protocol !== "https:") return "";
+
+    const driveFile = url.hostname === "drive.google.com" && url.pathname.match(/\/file\/d\/([^/]+)/);
+    if (driveFile) return `https://drive.google.com/thumbnail?id=${encodeURIComponent(driveFile[1])}&sz=w1600`;
+
+    return url.toString();
+  } catch {
+    return "";
+  }
+}
+
+async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
+  const sheetRows = await fetchSharedSheetRows({ sheet: "Gallery" });
+  if (!sheetRows?.length) return fallbackPhotos;
+
+  const [headers, ...rows] = sheetRows;
+  const visibleIndex = headerIndex(headers, "visible");
+  const photoIndex = headerIndex(headers, "photo url", "photo", "image url", "image");
+  const descriptionIndex = headerIndex(headers, "description", "caption");
+  const altIndex = headerIndex(headers, "alt text", "alt");
+  if (photoIndex < 0) return fallbackPhotos;
+
+  const photos = rows.flatMap((row, index) => {
+    const src = safeImageSource(row[photoIndex] || "");
+    if (!rowIsVisible(row, visibleIndex) || !src) return [];
+
+    const description = descriptionIndex < 0 ? "" : (row[descriptionIndex] || "").trim();
+    const alt = altIndex < 0 ? "" : (row[altIndex] || "").trim();
+    return [{
+      src,
+      description,
+      alt: alt || description || `Frontline Firstaid community training photo ${index + 1}`,
+    }];
+  });
+
+  return photos.length ? photos : fallbackPhotos;
+}
+
 export const metadata = { title: "Gallery", alternates: { canonical: "/gallery" } };
-export default function Gallery() {
+export default async function Gallery() {
+  const photos = await getGalleryPhotos();
+
   return <><PageHero eyebrow="In the community" title="Learning looks better hands-on." text="A glimpse at the workshops, partnerships, and people that bring our mission to life." />
     <section className="container section gallery-videos"><div className="section-heading"><div><span className="eyebrow">Video stories</span><h2>Frontline in the news.</h2></div><p>Watch conversations and features about our work without leaving this page.</p></div><div className="video-grid">{videos.map((video) => <figure className="video-card" key={video.src}><div className="video-frame">{video.type === "youtube" ? <iframe src={video.src} title={video.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /> : <video controls preload="metadata" poster={video.poster}><source src={video.src} type="video/mp4" />Your browser does not support embedded video.</video>}</div><figcaption><strong>{video.title}</strong><span>{video.caption}</span></figcaption></figure>)}</div></section>
-    <section className="container section gallery-photos"><div className="section-heading"><div><span className="eyebrow">Photo gallery</span><h2>Learning in action.</h2></div><p>Photos from our workshops and community partnerships.</p></div><div className="gallery-grid">{photos.map((photo, index) => <figure key={photo.src} className={`gallery-item item-${index + 1}`}><Image src={photo.src} alt={photo.alt} fill unoptimized sizes="(max-width: 700px) 100vw, 50vw" /></figure>)}</div></section></>;
+    <section className="container section gallery-photos"><div className="section-heading"><div><span className="eyebrow">Photo gallery</span><h2>Learning in action.</h2></div><p>Photos from our workshops and community partnerships.</p></div><div className="gallery-grid">{photos.map((photo, index) => <figure key={`${photo.src}-${index}`} className={`gallery-item item-${index + 1}`}><Image src={photo.src} alt={photo.alt} fill unoptimized sizes="(max-width: 700px) 100vw, 50vw" />{photo.description && <figcaption><span>{photo.description}</span></figcaption>}</figure>)}</div></section></>;
 }

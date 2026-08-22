@@ -65,6 +65,14 @@ em { color:var(--orange); font-style:normal; }
 .intro { display:grid; grid-template-columns:1.15fr 1fr; gap:12%; align-items:start; }
 .intro .lead,.prose .lead { color:var(--ink); font-size:1.22rem; line-height:1.65; margin-top:0; }
 .intro .text-link { margin-top:18px; }
+.community-impact { padding-block:88px; background:var(--navy); color:white; }
+.community-impact-inner { display:grid; grid-template-columns:1fr auto; gap:80px; align-items:center; }
+.community-impact h2 { max-width:650px; }
+.training-counter { min-width:330px; padding-left:68px; border-left:1px solid rgba(255,255,255,.2); }
+.training-counter strong,.training-counter span,.training-counter small { display:block; }
+.training-counter strong { color:white; font-family:var(--font-display),sans-serif; font-size:clamp(4.5rem,8vw,7.5rem); line-height:.88; letter-spacing:-.055em; }
+.training-counter span { margin-top:22px; color:white; font-size:1.05rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.training-counter small { margin-top:7px; color:#aeb9c1; font-size:.8rem; }
 .offerings { background:var(--cream); }
 .section-heading { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:55px; }
 .section-heading>p { max-width:410px; margin:0; }
@@ -203,7 +211,9 @@ a.resource-card:hover .resource-preview img { transform:scale(1.025); }
   .nav-links .button-small { min-height:40px; padding-inline:15px; }
   .instagram { padding-block:29px!important; }
   .hero-overlay { background:linear-gradient(90deg,rgba(18,18,18,.94),rgba(18,18,18,.68)); }
-  .intro,.split,.impact,.form-layout,.instructor-login-section { grid-template-columns:1fr; }
+  .intro,.split,.impact,.form-layout,.instructor-login-section,.community-impact-inner { grid-template-columns:1fr; }
+  .community-impact-inner { gap:48px; }
+  .training-counter { min-width:0; padding:42px 0 0; border-left:0; border-top:1px solid rgba(255,255,255,.2); }
   .instructor-login-section { gap:38px; }
   .resource-card { grid-template-columns:minmax(0,1fr) 260px; }
   .impact-image { min-height:450px; }
@@ -222,6 +232,7 @@ a.resource-card:hover .resource-preview img { transform:scale(1.025); }
   .hero-actions { align-items:flex-start; flex-direction:column; }
   .scroll-note { display:none; }
   .section-heading,.cta { align-items:flex-start; flex-direction:column; gap:30px; }
+  .community-impact { padding-block:70px; }
   .cards,.partner-grid { grid-template-columns:1fr; }
   .service-card { min-height:310px; }
   .partner-grid article { border:0!important; border-bottom:1px solid var(--line)!important; }
