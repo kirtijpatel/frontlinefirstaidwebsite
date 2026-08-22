@@ -38,16 +38,7 @@ export default function RequestTraining() {
       title="Request Training / Contact"
       text="Tell us a little about your audience and goals, or contact our student team with a question. We’ll follow up to help with your request."
     />
-    <section className="container form-layout section">
-      <aside>
-        <h2>What to expect</h2>
-        <ol>
-          <li><b>Share your needs</b><span>Tell us about your group, timing, and topics.</span></li>
-          <li><b>Plan together</b><span>We’ll confirm availability and workshop details.</span></li>
-          <li><b>Learn hands-on</b><span>Our instructors bring the session to life.</span></li>
-        </ol>
-        <div className="contact-box"><span>Questions first?</span><a href="mailto:uvafrontlinefirstaid@gmail.com">uvafrontlinefirstaid@gmail.com</a></div>
-      </aside>
+    <section className="container form-layout form-layout-single section">
       {status === "sent" ? <div className="success">
         <span>✓</span>
         <h2>Thanks for reaching out.</h2>
@@ -59,24 +50,11 @@ export default function RequestTraining() {
           <label>Last name<input required name="lastName" placeholder="Doe" /></label>
         </div>
         <label>Email address<input required type="email" name="email" placeholder="jane@example.org" /></label>
-        <label>Organization or group<input required name="organization" placeholder="Organization name" /></label>
-        <div className="field-row">
-          <label>Estimated group size<select name="size" defaultValue=""><option value="" disabled>Select one</option><option>Under 10</option><option>10–25</option><option>26–50</option><option>More than 50</option></select></label>
-          <label>Preferred timeframe<input name="timeframe" placeholder="e.g. October 2026" /></label>
-        </div>
-        <fieldset>
-          <legend>What are you interested in?</legend>
-          <div className="checks">
-            <label><input type="checkbox" name="topic" value="CPR" /> CPR fundamentals</label>
-            <label><input type="checkbox" name="topic" value="First aid" /> First aid essentials</label>
-            <label><input type="checkbox" name="topic" value="Custom" /> Custom workshop</label>
-          </div>
-        </fieldset>
-        <label>Anything else we should know?<textarea name="message" rows={5} placeholder="Tell us about your audience, goals, or accessibility needs." /></label>
+        <label>How can we help?<textarea name="message" rows={8} placeholder={"If you are contacting us about setting up a training, we would love to know:\n\n• Organization/group\n• Estimated group size\n• Preferred timeframe\n• Type of training (CPR, First Aid, Opioid Overdose)"} /></label>
         <input className="honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
         {status === "error" && <p className="form-error" role="alert">{error}</p>}
         <button className="button button-dark" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : <>Submit request <span>→</span></>}</button>
-        <small>Your request will be securely shared with the Frontline Firstaid team.</small>
+        <small className="direct-contact">You can also contact us directly by emailing <a href="mailto:uvafrontlinefirstaid@gmail.com">uvafrontlinefirstaid@gmail.com</a>.</small>
       </form>}
     </section>
   </>;

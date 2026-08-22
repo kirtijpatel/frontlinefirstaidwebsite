@@ -48,13 +48,9 @@ export async function POST(request: Request) {
         ? data.topics.map((topic: unknown) => clean(topic, 80)).filter(Boolean).slice(0, 10)
         : [];
 
-      if (!organization) {
-        return NextResponse.json({ error: "Please provide your organization or group." }, { status: 400 });
-      }
-
-      emailSubject = `[Frontline Firstaid] Training request from ${organization}`;
-      emailText = `New training request\n\nName: ${name}\nEmail: ${email}\nOrganization: ${organization}\nGroup size: ${size || "Not provided"}\nPreferred timeframe: ${timeframe || "Not provided"}\nTopics: ${topics.join(", ") || "Not provided"}\n\nAdditional details:\n${message || "None provided"}`;
-      emailHtml = `<h2>New Frontline Firstaid training request</h2><p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Organization:</strong> ${escapeHtml(organization)}</p><p><strong>Group size:</strong> ${escapeHtml(size || "Not provided")}</p><p><strong>Preferred timeframe:</strong> ${escapeHtml(timeframe || "Not provided")}</p><p><strong>Topics:</strong> ${escapeHtml(topics.join(", ") || "Not provided")}</p><hr><p><strong>Additional details:</strong><br>${escapeHtml(message || "None provided").replace(/\n/g, "<br>")}</p>`;
+      emailSubject = `[Frontline Firstaid] Request from ${name}`;
+      emailText = `Name: ${name}\nEmail address: ${email}\n\nAdditional text:\n${message || "None provided"}`;
+      emailHtml = `<h2>New Frontline Firstaid request</h2><p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Email address:</strong> ${escapeHtml(email)}</p><p><strong>Additional text:</strong><br>${escapeHtml(message || "None provided").replace(/\n/g, "<br>")}</p>`;
     } else {
       subject = clean(data.subject, 100);
       if (!subject || !message) {

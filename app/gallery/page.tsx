@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { PageHero } from "@/components/page-parts";
 import { fetchSharedSheetRows, headerIndex, rowIsVisible } from "@/lib/shared-sheet";
 
@@ -187,7 +186,7 @@ export default async function Gallery() {
   return <>
     <PageHero eyebrow="In the community" title="Learning looks better hands-on." text="A glimpse at the workshops, partnerships, and people that bring our mission to life." />
     <section className="container section gallery-videos">
-      <div className="section-heading"><div><span className="eyebrow">Video stories</span><h2>Frontline in the news.</h2></div><p>Watch conversations and features about our work without leaving this page.</p></div>
+      <div className="section-heading"><div><span className="eyebrow">Video stories</span><h2>Frontline in the news.</h2></div></div>
       <div className="video-grid">{videos.map((video, index) => <figure className={`video-card ${videos.length % 2 === 1 && index === videos.length - 1 ? "video-card-featured" : ""}`} key={`${video.src}-${index}`}>
         <div className="video-frame">{video.type === "youtube"
           ? <iframe src={video.src} title={video.title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
@@ -203,9 +202,8 @@ export default async function Gallery() {
       <div className="gallery-groups">{photoGroups.map((group, groupIndex) => <section className="gallery-group" key={`${group.header}-${groupIndex}`} aria-labelledby={`gallery-group-${groupIndex}`}>
         <h3 className="gallery-group-title" id={`gallery-group-${groupIndex}`}><span>Training</span>{group.header}</h3>
         <div className={`gallery-grid ${group.photos.length === 1 ? "gallery-grid-single" : ""}`}>{group.photos.map((photo, index) => {
-          const featured = group.photos.length >= 4 && (index === 0 || index === 3);
-          return <figure key={`${photo.src}-${index}`} className={`gallery-item ${featured ? "gallery-item-featured" : ""}`} tabIndex={photo.description ? 0 : undefined}>
-            <Image src={photo.src} alt={photo.alt} fill unoptimized sizes="(max-width: 700px) 100vw, 50vw" />
+          return <figure key={`${photo.src}-${index}`} className="gallery-item" tabIndex={photo.description ? 0 : undefined}>
+            <img className="gallery-photo" src={photo.src} alt={photo.alt} loading="lazy" referrerPolicy="no-referrer" />
             {photo.description && <figcaption><span>{photo.description}</span></figcaption>}
           </figure>;
         })}</div>

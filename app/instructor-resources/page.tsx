@@ -72,13 +72,15 @@ export default async function InstructorResources() {
       <aside className="emergency-contacts" aria-labelledby="emergency-contacts-title">
         <div className="emergency-contacts-heading">
           <span className="eyebrow">Emergency contacts</span>
-          <h2 id="emergency-contacts-title">Need immediate support?</h2>
-          <p>Tap a phone number to call.</p>
+          <h2 id="emergency-contacts-title">Need immediate help?</h2>
         </div>
-        <div className="emergency-contact-list">
-          <a href="tel:+15719822177"><span>Rebecca Stewart</span><strong>571-982-2177</strong></a>
-          <a href="tel:+19037182158"><span>Harshit Polavarapu</span><strong>903-718-2158</strong></a>
-          <a href="tel:+17035814140"><span>Tom Pridmore</span><strong>703-581-4140</strong></a>
+        <div className="emergency-contact-actions">
+          <div className="emergency-contact-list">
+            <a href="tel:+15719822177"><span>Rebecca Stewart</span><strong>571-982-2177</strong></a>
+            <a href="tel:+19037182158"><span>Harshit Polavarapu</span><strong>903-718-2158</strong></a>
+            <a href="tel:+17035814140"><span>Tom Pridmore</span><strong>703-581-4140</strong></a>
+          </div>
+          <a className="emergency-groupme" href="https://groupme.com/join_group/109486285/EYQ9PKMd" target="_blank" rel="noreferrer"><span>Instructor GroupMe</span><strong>Open group chat ↗</strong></a>
         </div>
       </aside>
       <div className="section-heading">
@@ -98,7 +100,7 @@ export default async function InstructorResources() {
             ? <a className="resource-card" href={resource.link} target="_blank" rel="noreferrer" key={`${resource.title}-${index}`}>{content}</a>
             : <article className="resource-card resource-card-disabled" key={`${resource.title}-${index}`}>{content}</article>;
         })}</div>}
-      <div className="resource-help"><strong>Need something added?</strong><p>Email the team at <a href="mailto:uvafrontlinefirstaid@gmail.com">uvafrontlinefirstaid@gmail.com</a>.</p></div>
+      <div className="resource-help"><strong>Need something added?</strong><p>Contact the leadership team via text or <a href="https://groupme.com/join_group/109486285/EYQ9PKMd" target="_blank" rel="noreferrer">GroupMe</a>.</p></div>
     </section> : <InstructorLogin />}
   </>;
 }
