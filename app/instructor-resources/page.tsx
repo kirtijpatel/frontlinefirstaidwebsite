@@ -69,6 +69,18 @@ export default async function InstructorResources() {
   return <>
     <PageHero eyebrow="Instructor portal" title="Instructor Resources" text={unlocked ? "Teaching materials and practical guidance for Frontline Firstaid instructors." : "A private resource library for members of the Frontline Firstaid instructor team."} />
     {unlocked ? <section className="container instructor-resources section">
+      <aside className="emergency-contacts" aria-labelledby="emergency-contacts-title">
+        <div className="emergency-contacts-heading">
+          <span className="eyebrow">Emergency contacts</span>
+          <h2 id="emergency-contacts-title">Need immediate support?</h2>
+          <p>Tap a phone number to call.</p>
+        </div>
+        <div className="emergency-contact-list">
+          <a href="tel:+15719822177"><span>Rebecca Stewart</span><strong>571-982-2177</strong></a>
+          <a href="tel:+19037182158"><span>Harshit Polavarapu</span><strong>903-718-2158</strong></a>
+          <a href="tel:+17035814140"><span>Tom Pridmore</span><strong>703-581-4140</strong></a>
+        </div>
+      </aside>
       <div className="section-heading">
         <div><span className="eyebrow">Resource library</span><h2>Everything you need to lead a session.</h2></div>
         <InstructorLogout />
