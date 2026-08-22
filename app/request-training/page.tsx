@@ -51,7 +51,7 @@ export default function RequestTraining() {
       {status === "sent" ? <div className="success">
         <span>✓</span>
         <h2>Thanks for reaching out.</h2>
-        <p>Your request has been sent to the Frontline Firstaid team. We’ll follow up as soon as possible.</p>
+        <p>Your request has been saved for the Frontline Firstaid team. We’ll follow up as soon as possible.</p>
         <button className="text-link" onClick={() => setStatus("idle")}>Send another request →</button>
       </div> : <form className="training-form" onSubmit={submit}>
         <div className="field-row">
@@ -76,7 +76,7 @@ export default function RequestTraining() {
         <input className="honeypot" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
         {status === "error" && <p className="form-error" role="alert">{error}</p>}
         <button className="button button-dark" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending…" : <>Submit request <span>→</span></>}</button>
-        <small>Your request will be sent to uvafrontlinefirstaid@gmail.com.</small>
+        <small>Your request will be securely shared with the Frontline Firstaid team.</small>
       </form>}
     </section>
   </>;
